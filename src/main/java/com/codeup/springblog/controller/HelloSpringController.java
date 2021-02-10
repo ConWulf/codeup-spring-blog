@@ -1,20 +1,20 @@
 package com.codeup.springblog.controller;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HelloSpringController {
 
     @GetMapping("/hello")
-    @ResponseBody
     public String helloSpring() {
-        return "Hello From Spring";
+        return "hello";
     }
 
     @GetMapping("/hello/{name}")
-    @ResponseBody
-    public String sayHello(@PathVariable String name) {
-        return "hello "+name;
+    public String sayHello(@PathVariable String name, Model model) {
+        model.addAttribute("name", name);
+        return "hello";
     }
 
     @RequestMapping(path = "/increment/{number}")
