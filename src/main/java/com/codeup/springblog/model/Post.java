@@ -1,24 +1,37 @@
 package com.codeup.springblog.model;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name="posts")
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false, length = 100)
     private String title;
+    @Column(nullable = false, length = 20000)
     private String body;
-    private List<String> tags;
+    @ManyToMany
+    @JoinTable(
+            name = "posts_tags",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")}
+    )
+    private List<Tag> tags;
 
-    public Post() { }
+    public Post() {}
 
-
-    public Post(long id, String title, String body, List<String> tags) {
+    public Post(long id, String title, String body, List<Tag> tags) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.tags = tags;
+
     }
 
-    public Post(String title, String body, List<String> tags) {
+    public Post(String title, String body, List<Tag> tags) {
         this.title = title;
         this.body = body;
         this.tags = tags;
@@ -48,11 +61,11 @@ public class Post {
         this.body = body;
     }
 
-    public List<String> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 }

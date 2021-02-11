@@ -11,7 +11,7 @@
 <div th:each="post : ${posts}">
 	<h1 th:text="${post.title}"></h1>
 	<p th:text="${post.body}"></p>
-	<span th:each="tag : ${post.tags}" th:text="${tag}"></span>
+	<span th:each="tag : ${post.tags}" th:text="${tag.name}"></span>
 	<a th:href="@{/posts/{id}(id=${post.id})}">more details</a>
 </div>
 </body>
