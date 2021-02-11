@@ -1,6 +1,8 @@
 package com.codeup.springblog.controller;
 
 import com.codeup.springblog.model.Post;
+import com.codeup.springblog.model.Tag;
+import com.codeup.springblog.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,21 +17,27 @@ import java.util.List;
 @Controller
 public class PostController {
 
+    private final PostRepository postDao;
+
+    public PostController(PostRepository postDao) {
+        this.postDao = postDao;
+    }
+
     @GetMapping("/posts")
     public String getPosts(Model model) {
         List<Post> posts = new ArrayList<>();
         posts.add(
-                new Post(1L,"post1", "this is a post", Arrays.asList("happy", "java", "bean"))
+                new Post(1L,"post1", "this is a post", Arrays.asList(new Tag("happy"), new Tag("java"), new Tag("bean")))
         );
         posts.add(
-                new Post(2L,"post2", "this is a second post", Arrays.asList("happy", "html", "tag"))
+                new Post(2L,"post2", "this is a second post", Arrays.asList(new Tag("happy"), new Tag("html"), new Tag("tag")))
         );
         model.addAttribute("posts", posts);
         return "posts/index";
     }
     @GetMapping("/posts/{id}")
     public String viewPost(Model model, @PathVariable long id) {
-        Post post =  new Post(id,"post", "this is a post", Arrays.asList("happy", "java", "bean"));
+        Post post =  new Post(id,"post", "this is a post", Arrays.asList(new Tag("happy"), new Tag("java"), new Tag("bean")));
         model.addAttribute("post", post);
         return "posts/show";
     }
