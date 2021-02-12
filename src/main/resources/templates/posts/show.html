@@ -1,19 +1,14 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
+<head th:replace="partials/partials :: head">
 </head>
 <body>
-
+<nav th:replace="partials/partials :: nav"></nav>
 <div>
 	<h1 th:text="${post.title}"></h1>
 	<p th:text="${post.body}"></p>
 	<span th:each="tag : ${post.tags}" th:text="${tag.name}"></span>
 </div>
-
+<footer th:replace="partials/partials :: footer"></footer>
 </body>
 </html>
