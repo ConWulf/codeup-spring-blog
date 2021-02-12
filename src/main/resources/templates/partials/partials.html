@@ -9,11 +9,13 @@
 	<title>Document</title>
 </head>
 <body>
-<nav th:fragment="nav">
-	<ul>
-		<li><a href="/">home</a></li>
-		<li><a href="/posts">posts</a></li>
-		<li>profile</li>
+<nav th:fragment="nav" class="bg-gray-900 text-gray-200 p-2 text-lg">
+	<ul class="flex">
+		<li><a href="/" class="hover:text-green-300">home</a></li>
+		<li><a href="/posts" class="mx-2 hover:text-green-300">posts</a></li>
+		<li>
+			<a href="" class="hover:text-green-300">profile</a>
+		</li>
 	</ul>
 </nav>
 <header th:fragment="header">

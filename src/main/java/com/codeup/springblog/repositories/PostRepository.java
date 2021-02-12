@@ -12,6 +12,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Modifying
     @Transactional
-    @Query(nativeQuery = true, value="UPDATE posts p SET p.title = :title, p.body = :body WHERE p.id = :id")
+    @Query("UPDATE Post p SET p.title = :title, p.body = :body WHERE p.id = :id")
     void update(@Param("title") String title, @Param("body") String body, @Param("id") long id);
 }
