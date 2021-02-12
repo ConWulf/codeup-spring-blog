@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/partials :: head"></head>
+<body>
+<nav th:replace="partials/partials :: nav"></nav>
+<form th:action="@{/posts/edit/{id}(id=${post.id})}" th:method="post" th:object="${post}">
+	<label for="title">title</label>
+	<input type="text" id="title" th:field="*{title}" th:value="post.title">
+	<label for="body">body</label>
+	<textarea id="body" th:field="*{body}" th:value="post.body"></textarea>
+	<input type="submit">
+</form>
+</body>
+</html>

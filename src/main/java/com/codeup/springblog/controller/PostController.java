@@ -5,10 +5,7 @@ import com.codeup.springblog.model.Tag;
 import com.codeup.springblog.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,32 +22,43 @@ public class PostController {
 
     @GetMapping("/posts")
     public String getPosts(Model model) {
-        List<Post> posts = new ArrayList<>();
-        posts.add(
-                new Post(1L,"post1", "this is a post", Arrays.asList(new Tag("happy"), new Tag("java"), new Tag("bean")))
-        );
-        posts.add(
-                new Post(2L,"post2", "this is a second post", Arrays.asList(new Tag("happy"), new Tag("html"), new Tag("tag")))
-        );
+        List<Post> posts = postDao.findAll();
         model.addAttribute("posts", posts);
         return "posts/index";
     }
     @GetMapping("/posts/{id}")
     public String viewPost(Model model, @PathVariable long id) {
-        Post post =  new Post(id,"post", "this is a post", Arrays.asList(new Tag("happy"), new Tag("java"), new Tag("bean")));
+        Post post = postDao.getOne(id);
         model.addAttribute("post", post);
         return "posts/show";
     }
 
     @GetMapping("/posts/create")
     @ResponseBody
-    public String viewCreateAdd() {
+    public String viewCreatePost() {
         return "view the form for creating a post";
     }
 
     @PostMapping("/posts/create")
     @ResponseBody
-    public String createAdd() {
+    public String createPost() {
         return "create a new post";
+    }
+
+    @GetMapping("/posts/edit/{id}")
+    public String editPost(@PathVariable long id, Model model) {
+        Post post = postDao.getOne(id);
+        model.addAttribute("post", post);
+        return "posts/edit";
+    }
+    @PostMapping("/posts/edit/{id}")
+    public String editPost(@ModelAttribute Post post) {
+        postDao.update(post.getTitle(), post.getBody(), post.getId());
+        return "redirect:/posts";
+    }
+    @PostMapping("/posts/delete/{id}")
+    public String deletePost(@PathVariable long id) {
+        postDao.deleteById(id);
+        return "redirect:/posts";
     }
 }
