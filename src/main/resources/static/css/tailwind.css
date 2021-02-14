@@ -585,6 +585,31 @@ video {
   }
 }
 
+.profile-menu {
+  transform-origin: top right;
+  transition: transform 100ms linear, opacity 200ms linear;
+}
+
+.scale3d {
+  opacity: 0;
+  transform: scale3d(0, 0, 0);
+}
+
+.nav-link {
+  transition: transform 200ms linear, color 200ms linear;
+}
+
+.nav-link:hover {
+  transform: translateY(-0.125rem);
+}
+
+.triangle {
+  transition: transform 200ms linear, opacity 200ms linear;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 14px solid rgba(75, 85, 99);
+}
+
 .space-y-0 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
@@ -11473,6 +11498,10 @@ video {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-revert {
+  height: revert;
 }
 
 .text-xs {
@@ -27122,6 +27151,10 @@ video {
   z-index: auto;
 }
 
+.-z-10 {
+  z-index: -10;
+}
+
 .focus-within\:z-0:focus-within {
   z-index: 0;
 }
@@ -27150,6 +27183,10 @@ video {
   z-index: auto;
 }
 
+.focus-within\:-z-10:focus-within {
+  z-index: -10;
+}
+
 .focus\:z-0:focus {
   z-index: 0;
 }
@@ -27176,6 +27213,10 @@ video {
 
 .focus\:z-auto:focus {
   z-index: auto;
+}
+
+.focus\:-z-10:focus {
+  z-index: -10;
 }
 
 .gap-0 {
@@ -42099,6 +42140,10 @@ video {
 
   .sm\:h-screen {
     height: 100vh;
+  }
+
+  .sm\:h-revert {
+    height: revert;
   }
 
   .sm\:text-xs {
@@ -57735,6 +57780,10 @@ video {
     z-index: auto;
   }
 
+  .sm\:-z-10 {
+    z-index: -10;
+  }
+
   .sm\:focus-within\:z-0:focus-within {
     z-index: 0;
   }
@@ -57763,6 +57812,10 @@ video {
     z-index: auto;
   }
 
+  .sm\:focus-within\:-z-10:focus-within {
+    z-index: -10;
+  }
+
   .sm\:focus\:z-0:focus {
     z-index: 0;
   }
@@ -57789,6 +57842,10 @@ video {
 
   .sm\:focus\:z-auto:focus {
     z-index: auto;
+  }
+
+  .sm\:focus\:-z-10:focus {
+    z-index: -10;
   }
 
   .sm\:gap-0 {
@@ -72647,6 +72704,10 @@ video {
 
   .md\:h-screen {
     height: 100vh;
+  }
+
+  .md\:h-revert {
+    height: revert;
   }
 
   .md\:text-xs {
@@ -88283,6 +88344,10 @@ video {
     z-index: auto;
   }
 
+  .md\:-z-10 {
+    z-index: -10;
+  }
+
   .md\:focus-within\:z-0:focus-within {
     z-index: 0;
   }
@@ -88311,6 +88376,10 @@ video {
     z-index: auto;
   }
 
+  .md\:focus-within\:-z-10:focus-within {
+    z-index: -10;
+  }
+
   .md\:focus\:z-0:focus {
     z-index: 0;
   }
@@ -88337,6 +88406,10 @@ video {
 
   .md\:focus\:z-auto:focus {
     z-index: auto;
+  }
+
+  .md\:focus\:-z-10:focus {
+    z-index: -10;
   }
 
   .md\:gap-0 {
@@ -103195,6 +103268,10 @@ video {
 
   .lg\:h-screen {
     height: 100vh;
+  }
+
+  .lg\:h-revert {
+    height: revert;
   }
 
   .lg\:text-xs {
@@ -118831,6 +118908,10 @@ video {
     z-index: auto;
   }
 
+  .lg\:-z-10 {
+    z-index: -10;
+  }
+
   .lg\:focus-within\:z-0:focus-within {
     z-index: 0;
   }
@@ -118859,6 +118940,10 @@ video {
     z-index: auto;
   }
 
+  .lg\:focus-within\:-z-10:focus-within {
+    z-index: -10;
+  }
+
   .lg\:focus\:z-0:focus {
     z-index: 0;
   }
@@ -118885,6 +118970,10 @@ video {
 
   .lg\:focus\:z-auto:focus {
     z-index: auto;
+  }
+
+  .lg\:focus\:-z-10:focus {
+    z-index: -10;
   }
 
   .lg\:gap-0 {
@@ -133743,6 +133832,10 @@ video {
 
   .xl\:h-screen {
     height: 100vh;
+  }
+
+  .xl\:h-revert {
+    height: revert;
   }
 
   .xl\:text-xs {
@@ -149379,6 +149472,10 @@ video {
     z-index: auto;
   }
 
+  .xl\:-z-10 {
+    z-index: -10;
+  }
+
   .xl\:focus-within\:z-0:focus-within {
     z-index: 0;
   }
@@ -149407,6 +149504,10 @@ video {
     z-index: auto;
   }
 
+  .xl\:focus-within\:-z-10:focus-within {
+    z-index: -10;
+  }
+
   .xl\:focus\:z-0:focus {
     z-index: 0;
   }
@@ -149433,6 +149534,10 @@ video {
 
   .xl\:focus\:z-auto:focus {
     z-index: auto;
+  }
+
+  .xl\:focus\:-z-10:focus {
+    z-index: -10;
   }
 
   .xl\:gap-0 {
@@ -164291,6 +164396,10 @@ video {
 
   .\32xl\:h-screen {
     height: 100vh;
+  }
+
+  .\32xl\:h-revert {
+    height: revert;
   }
 
   .\32xl\:text-xs {
@@ -179927,6 +180036,10 @@ video {
     z-index: auto;
   }
 
+  .\32xl\:-z-10 {
+    z-index: -10;
+  }
+
   .\32xl\:focus-within\:z-0:focus-within {
     z-index: 0;
   }
@@ -179955,6 +180068,10 @@ video {
     z-index: auto;
   }
 
+  .\32xl\:focus-within\:-z-10:focus-within {
+    z-index: -10;
+  }
+
   .\32xl\:focus\:z-0:focus {
     z-index: 0;
   }
@@ -179981,6 +180098,10 @@ video {
 
   .\32xl\:focus\:z-auto:focus {
     z-index: auto;
+  }
+
+  .\32xl\:focus\:-z-10:focus {
+    z-index: -10;
   }
 
   .\32xl\:gap-0 {

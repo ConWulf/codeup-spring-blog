@@ -9,21 +9,36 @@
 	<title>Document</title>
 </head>
 <body>
-<nav th:fragment="nav" class="bg-gray-900 text-gray-200 p-2 text-lg">
-	<ul class="flex">
-		<li><a href="/" class="hover:text-green-300">home</a></li>
-		<li><a href="/posts" class="mx-2 hover:text-green-300">posts</a></li>
-		<li>
-			<a href="" class="hover:text-green-300">profile</a>
+<nav th:fragment="nav" class="text-gray-200 p-2 text-lg">
+	<ul class="flex justify-end">
+		<li class="flex-grow"><a href="/" class="inline-block rounded nav-link hover:text-green-300 px-1 bg-gray-600 hover:shadow-lg">Home</a></li>
+		<li ><a href="/login" class="inline-block rounded nav-link hover:text-green-300 bg-gray-600 px-1 hover:shadow-lg">Login</a></li>
+		<li><a href="/register" class="inline-block rounded nav-link hover:text-green-300 ml-2 px-1 bg-gray-600 hover:shadow-lg">Sign Up</a></li>
+		<li><a href="/posts" class="inline-block rounded nav-link mx-2 hover:text-green-300 px-1 bg-gray-600 hover:shadow-lg">posts</a></li>
+		<li class="mr-2">
+			<div class="relative">
+				<i id="profile-icon" class="far fa-user-circle cursor-pointer text-gray-600 text-xl hover:text-green-300"></i>
+				<div id="profile-menu" class=" scale3d profile-menu absolute w-52 bg-gray-600
+				 -right-1.5 top-8 rounded-lg z-20">
+				<div id="triangle" class="scale3d triangle absolute -top-2 -right-0 w-0 h-0 -z-10"></div>
+					<a href="" class="flex items-center border-b border-gray-300 hover:text-green-300 hover:bg-gray-800 block pt-1 pb-1 px-2 rounded-t-lg">{{username here}}</a>
+					<a href="" class="hover:text-green-300 border-b border-gray-300 hover:bg-gray-800 block p-2">Edit Profile</a>
+					<a href="" class="flex items-center hover:text-green-300 hover:bg-gray-800 block pt-1 pb-2 px-2 rounded-b-lg">Logout</a>
+				</div>
+			</div>
 		</li>
 	</ul>
 </nav>
 <header th:fragment="header">
-	This is a header
+	<img src="#" alt="t">
 </header>
 <footer th:fragment="footer">
 	©2052
 </footer>
 
+<div th:fragment="scripts" th:tag="hide">
+	<script src="https://kit.fontawesome.com/6e57a86385.js" crossorigin="anonymous"></script>
+	<script src="/js/index.js"></script>
+</div>
 </body>
 </html>

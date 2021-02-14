@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .profile-menu {
+        transform-origin: top right;
+        transition: transform 100ms linear, opacity 200ms linear;
+    }
+    .scale3d {
+        opacity: 0;
+        transform: scale3d(0, 0, 0);
+    }
+    .nav-link {
+        transition: transform 200ms linear, color 200ms linear;
+    }
+    .nav-link:hover {
+        transform: translateY(-0.125rem);
+    }
+    .triangle {
+        transition: transform 200ms linear, opacity 200ms linear;
+        border-left: 14px solid transparent;
+        border-right: 14px solid transparent;
+        border-bottom: 14px solid rgba(75, 85, 99);
+    }
+}
