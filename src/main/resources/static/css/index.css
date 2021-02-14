@@ -23,4 +23,10 @@
         border-right: 14px solid transparent;
         border-bottom: 14px solid rgba(75, 85, 99);
     }
+    .ad {
+        @apply col-span-full bg-gray-400 shadow-lg sm:col-span-6 md:col-span-4 xl:col-span-3
+    }
+    .wrapper {
+        @apply grid grid-cols-12 gap-1 mx-1
+    }
 }

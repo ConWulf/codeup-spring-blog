@@ -3,17 +3,18 @@
 <head th:replace="partials/partials :: head"></head>
 <body>
 <nav th:replace="partials/partials :: nav"></nav>
-<div th:each="post : ${posts}">
-	<h1 th:text="${post.title}"></h1>
-	<p th:text="${post.body}"></p>
-	<span th:each="tag : ${post.tags}" th:text="${tag.name}"></span>
-	<a th:href="@{|/posts/${post.id}|}">more details</a>
-	<a th:href="@{|/posts/edit/${post.id}|}">edit</a>
-	<form th:action="@{|/posts/delete/${post.id}|}" th:method="post">
-		<button>DELETE</button>
-	</form>
+<div class="wrapper">
+	<div class="ad" th:each="post : ${posts}">
+		<h1 th:text="${post.title}"></h1>
+		<p th:text="${post.body}"></p>
+		<span th:each="tag : ${post.tags}" th:text="${tag.name}"></span>
+		<a th:href="@{|/posts/${post.id}|}">more details</a>
+		<a th:href="@{|/posts/edit/${post.id}|}">edit</a>
+		<form th:action="@{|/posts/delete/${post.id}|}" th:method="post">
+			<button>DELETE</button>
+		</form>
+	</div>
 </div>
-
 <footer th:replace="partials/partials :: footer"></footer>
 <div th:replace="partials/partials :: scripts"></div>
 </body>
