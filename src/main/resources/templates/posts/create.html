@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+	<form th:action="@{/posts/create}" th:method="post" th:object="${post}">
+		<label for="title">TITLE</label>
+		<input type="text" id="title" th:field="*{title}">
+		<label for="body">BODY</label>
+		<input type="text" id="body" th:field="*{body}">
+		<input type="submit">
+	</form>
+
+</body>
+</html>
