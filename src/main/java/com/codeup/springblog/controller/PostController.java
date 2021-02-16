@@ -2,7 +2,9 @@ package com.codeup.springblog.controller;
 
 import com.codeup.springblog.model.Post;
 import com.codeup.springblog.model.Tag;
+import com.codeup.springblog.model.User;
 import com.codeup.springblog.repositories.PostRepository;
+import com.codeup.springblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,11 @@ import java.util.List;
 public class PostController {
 
     private final PostRepository postDao;
+    private final UserRepository userDao;
 
-    public PostController(PostRepository postDao) {
+    public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
     @GetMapping("/posts")
@@ -41,6 +45,7 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
+        post.setUser(new User(1, "1234",  "email@email.com", "banana"));
         postDao.save(post);
         return "redirect:/posts";
     }

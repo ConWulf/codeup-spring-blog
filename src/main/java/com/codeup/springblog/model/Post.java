@@ -20,6 +20,9 @@ public class Post {
             inverseJoinColumns = {@JoinColumn(name = "tag_id")}
     )
     private List<Tag> tags;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Post() {}
 
@@ -67,5 +70,13 @@ public class Post {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
