@@ -34,15 +34,15 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
-    public String viewCreatePost() {
-        return "view the form for creating a post";
+    public String viewCreatePost(Model model) {
+        model.addAttribute("post", new Post());
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String createPost() {
-        return "create a new post";
+    public String createPost(@ModelAttribute Post post) {
+        postDao.save(post);
+        return "redirect:/posts";
     }
 
     @GetMapping("/posts/edit/{id}")
