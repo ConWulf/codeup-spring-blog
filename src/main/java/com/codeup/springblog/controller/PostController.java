@@ -18,10 +18,12 @@ public class PostController {
 
     private final PostRepository postDao;
     private final UserRepository userDao;
+    private final EmailService emailService;
 
-    public PostController(PostRepository postDao, UserRepository userDao) {
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService mailService) {
         this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = mailService;
     }
 
     @GetMapping("/posts")
@@ -46,6 +48,7 @@ public class PostController {
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
         post.setUser(new User(1, "1234",  "email@email.com", "banana"));
+        emailService.prepareAndASend(post, "post created", "you have recently created a post");
         postDao.save(post);
         return "redirect:/posts";
     }
