@@ -9,10 +9,13 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(nullable = false, length = 100)
     private String title;
+
     @Column(nullable = false, length = 20000)
     private String body;
+
     @ManyToMany
     @JoinTable(
             name = "posts_tags",
@@ -20,6 +23,7 @@ public class Post {
             inverseJoinColumns = {@JoinColumn(name = "tag_id")}
     )
     private List<Tag> tags;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

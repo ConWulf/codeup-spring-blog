@@ -9,12 +9,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(nullable=false)
     private String username;
+
     @Column(nullable=false)
     private String email;
+
     @Column(nullable=false)
     private String password;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "user"
@@ -27,12 +31,10 @@ public class User {
         return id;
     }
 
-    public User(long id, String username, String email, String password, List<Post> posts) {
-        this.id = id;
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.posts = posts;
     }
 
     public User(long id, String username, String email, String password) {

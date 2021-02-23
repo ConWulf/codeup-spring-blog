@@ -47,7 +47,8 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
-        post.setUser(new User(1, "1234",  "email@email.com", "banana"));
+        User user = userDao.findAll().get(0);
+        post.setUser(user);
         emailService.prepareAndASend(post, "post created", "you have recently created a post");
         postDao.save(post);
         return "redirect:/posts";
