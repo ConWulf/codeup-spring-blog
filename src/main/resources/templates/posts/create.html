@@ -3,12 +3,15 @@
 <head th:replace="partials/partials :: head"></head>
 <body>
 <nav th:replace="partials/partials :: nav"></nav>
-	<form th:action="@{/posts/create}" th:method="post" th:object="${post}">
+	<form th:action="@{/posts/create}" th:method="post" th:object="${post}" class="flex flex-col mx-auto p-1 w-11/12 max-w-4xl bg-gray-600">
 	<label for="title">TITLE</label>
 	<input type="text" id="title" th:field="*{title}">
 	<label for="body">BODY</label>
 	<input type="text" id="body" th:field="*{body}">
-	<input type="submit">
+	<input type="submit" class="mt-4">
 	</form>
+
+<footer th:replace="partials/partials :: footer"></footer>
+<div th:replace="partials/partials :: scripts"></div>
 </body>
 </html>
