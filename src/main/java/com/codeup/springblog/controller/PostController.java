@@ -17,12 +17,12 @@ import java.util.List;
 public class PostController {
 
     private final PostRepository postDao;
-    private final UserRepository userDao;
+    private final UserService userService;
     private final EmailService emailService;
 
-    public PostController(PostRepository postDao, UserRepository userDao, EmailService mailService) {
+    public PostController(PostRepository postDao, UserService userService, EmailService mailService) {
         this.postDao = postDao;
-        this.userDao = userDao;
+        this.userService = userService;
         this.emailService = mailService;
     }
 
@@ -47,7 +47,7 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
-        User user = userDao.findAll().get(0);
+        User user = userService.loggedInUser();
         post.setUser(user);
         Post savedPost = postDao.save(post);
         emailService.prepareAndASend(savedPost, "post created", String.format("you have recently created a post\n%s %s", savedPost.getTitle(), savedPost.getBody()));
@@ -63,6 +63,7 @@ public class PostController {
     @PostMapping("/posts/edit/{id}")
     public String editPost(@ModelAttribute Post post) {
         postDao.update(post.getTitle(), post.getBody(), post.getId());
+        emailService.prepareAndASend(post, "post edited", String.format("you have recently edited a post\n%s %s", post.getTitle(), post.getBody()));
         return "redirect:/posts";
     }
     @PostMapping("/posts/delete/{id}")
