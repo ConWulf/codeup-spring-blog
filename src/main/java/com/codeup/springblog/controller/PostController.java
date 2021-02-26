@@ -3,8 +3,8 @@ package com.codeup.springblog.controller;
 import com.codeup.springblog.model.Post;
 import com.codeup.springblog.model.User;
 import com.codeup.springblog.repositories.PostRepository;
-import com.codeup.springblog.repositories.UserRepository;
 import com.codeup.springblog.services.EmailService;
+import com.codeup.springblog.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +15,15 @@ import java.util.List;
 public class PostController {
 
     private final PostRepository postDao;
-    private final UserRepository userDao;
+    private final UserService userService;
     private final EmailService emailService;
 
-    public PostController(PostRepository postDao, UserRepository userDao, EmailService mailService) {
+    public PostController(PostRepository postDao, UserService userService, EmailService mailService) {
         this.postDao = postDao;
-        this.userDao = userDao;
+        this.userService = userService;
         this.emailService = mailService;
     }
+
 
     @GetMapping("/posts")
     public String getPosts(Model model) {
@@ -45,7 +46,7 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
-        User user = userDao.findAll().get(0);
+        User user = userService.loggedInUser();
         post.setUser(user);
         Post savedPost = postDao.save(post);
         emailService.prepareAndASend(savedPost, "post created", String.format("you have recently created a post\n%s %s", savedPost.getTitle(), savedPost.getBody()));

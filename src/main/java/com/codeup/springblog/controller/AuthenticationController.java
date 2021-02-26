@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class UserController {
-    private UserRepository userDao;
-    private PasswordEncoder passwordEncoder;
+public class AuthenticationController {
+    private final UserRepository userDao;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
+    public AuthenticationController(UserRepository userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/sign-up")
-    public String showSignUp(Model model) {
+    public String showSignUpPage(Model model) {
         model.addAttribute("user", new User());
-        return "/sign-up";
+        return "/users/sign-up";
     }
 
     @PostMapping("/sign-up")
@@ -34,8 +34,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String showLogin() {
-        return "/login";
+    public String showLoginPage() {
+        return "/users/login";
     }
 
 }
