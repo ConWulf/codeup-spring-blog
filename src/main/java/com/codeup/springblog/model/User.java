@@ -10,10 +10,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable=false)
+    @Column(nullable=false, unique = true)
     private String username;
 
-    @Column(nullable=false)
+    @Column(nullable=false, unique = true)
     private String email;
 
     @Column(nullable=false)
@@ -27,22 +27,14 @@ public class User {
 
     public User() { }
 
-    public long getId() {
-        return id;
+    public User(User copy) {
+        this.id = copy.id;
+        this.username = copy.username;
+        this.email = copy.email;
+        this.password = copy.password;
     }
 
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(long id, String username, String email, String password) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
+    public long getId() { return id; }
 
     public void setId(long id) {
         this.id = id;

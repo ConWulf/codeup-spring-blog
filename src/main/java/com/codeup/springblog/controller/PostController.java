@@ -1,28 +1,26 @@
 package com.codeup.springblog.controller;
 
 import com.codeup.springblog.model.Post;
-import com.codeup.springblog.model.Tag;
 import com.codeup.springblog.model.User;
 import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.repositories.UserRepository;
+import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
 public class PostController {
 
     private final PostRepository postDao;
-    private final UserService userService;
+    private final UserRepository userDao;
     private final EmailService emailService;
 
-    public PostController(PostRepository postDao, UserService userService, EmailService mailService) {
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService mailService) {
         this.postDao = postDao;
-        this.userService = userService;
+        this.userDao = userDao;
         this.emailService = mailService;
     }
 
@@ -47,7 +45,7 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
-        User user = userService.loggedInUser();
+        User user = userDao.findAll().get(0);
         post.setUser(user);
         Post savedPost = postDao.save(post);
         emailService.prepareAndASend(savedPost, "post created", String.format("you have recently created a post\n%s %s", savedPost.getTitle(), savedPost.getBody()));
@@ -63,7 +61,6 @@ public class PostController {
     @PostMapping("/posts/edit/{id}")
     public String editPost(@ModelAttribute Post post) {
         postDao.update(post.getTitle(), post.getBody(), post.getId());
-        emailService.prepareAndASend(post, "post edited", String.format("you have recently edited a post\n%s %s", post.getTitle(), post.getBody()));
         return "redirect:/posts";
     }
     @PostMapping("/posts/delete/{id}")
@@ -72,3 +69,6 @@ public class PostController {
         return "redirect:/posts";
     }
 }
+
+
+
