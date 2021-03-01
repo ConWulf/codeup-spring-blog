@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "postcss src/main/resources/static/css/index.css -o src/main/resources/static/css/tailwind.css "
+    "build": "postcss src/main/resources/static/css/index.css -o src/main/resources/static/css/tailwind.css"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,8 @@
     "postcss": "^8.2.6",
     "postcss-cli": "^8.3.1",
     "tailwindcss": "^2.0.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.2.1"
   }
 }
