@@ -3,6 +3,7 @@ package com.codeup.springblog.model;
 import com.codeup.springblog.ValidPassword;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -18,8 +19,9 @@ public class User {
     @Column(nullable=false, unique = true)
     private String email;
 
-    @ValidPassword
     @Column(nullable=false)
+    @NotBlank(message = "must have a password")
+    @ValidPassword
     private String password;
 
     @OneToMany(

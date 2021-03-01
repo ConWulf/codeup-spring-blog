@@ -29,7 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/sign-up")
-    public String saveUser(@Valid User user, Errors e, Model model) {
+    public String saveUser(@Valid @ModelAttribute User user, Errors e, Model model) {
         if(e.hasErrors()) {
             model.addAttribute("errors", e);
             return "/users/sign-up";

@@ -12,26 +12,32 @@
 				Create an Account
 			</h2>
 		</div>
-		<form class="mt-8 space-y-6" th:action="@{/login}" method="post">
+		<form class="mt-8 space-y-6" th:action="@{/sign-up}" method="post" th:object="${user}">
 			<input type="hidden" name="remember" value="true">
 			<div class="rounded-md shadow-sm -space-y-px">
 				<div>
 					<label for="username" class="sr-only">Username</label>
-					<input id="username" name="username" type="text" autocomplete="username" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="username">
+					<input id="username"  th:field="*{username}" type="text" autocomplete="username" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="username">
 				</div>
 				<div>
 					<label for="email-address" class="sr-only">Email address</label>
-					<input id="email-address" name="email" type="email" autocomplete="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
+					<input id="email-address" th:field="*{email}" type="email" autocomplete="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
 				</div>
 				<div>
 					<label for="password" class="sr-only">Password</label>
-					<input id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
+					<input id="password" th:field="*{password}" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
 				</div>
 				<div>
-					<label for="confirm-password" class="sr-only">Password</label>
+					<label for="confirm-password" class="sr-only">Confirm Password</label>
 					<input id="confirm-password" name="confirm-password" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Confirm Password">
 				</div>
 			</div>
+
+			<ul class="text-danger" th:each="error: ${#fields.errors('password')}">
+				<li th:each="message : ${error.split(',')}">
+					<p class="error-message" th:text="${message}"></p>
+				</li>
+			</ul>
 
 			<div class="flex items-center justify-between">
 				<div class="flex items-center">
