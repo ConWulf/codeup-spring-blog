@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private UserDetailsLoader userLoader;
+    private final UserDetailsLoader userLoader;
 
     public SecurityConfiguration(UserDetailsLoader userLoader) {
         this.userLoader = userLoader;
