@@ -29,4 +29,8 @@
     .wrapper {
         @apply grid grid-cols-12 gap-1 mx-1
     }
+
+    #mobile-menu {
+        transition: max-height 100ms linear;
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -29,7 +30,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/sign-up")
-    public String saveUser(@Valid @ModelAttribute User user, Errors e, Model model) {
+    public String saveUser(@Valid @ModelAttribute User user, Errors e, Model model, @RequestParam(name = "confirm-password") String confirmPassword) {
         if(e.hasErrors()) {
             model.addAttribute("errors", e);
             return "/users/sign-up";
@@ -38,6 +39,9 @@ public class AuthenticationController {
             return "/users/sign-up";
         } else if(userDao.findByEmail(user.getEmail()) != null) {
             model.addAttribute("email", user.getEmail());
+            return "/users/sign-up";
+        } else if(!confirmPassword.equals(user.getPassword())) {
+            model.addAttribute("mismatch", 0);
             return "/users/sign-up";
         }
 
