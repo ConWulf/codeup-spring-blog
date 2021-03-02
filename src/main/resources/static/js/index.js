@@ -1,22 +1,28 @@
 (function() {
-    const icon = document.querySelector("#profile-icon");
+    const icon = document.querySelector("#user-menu");
     const menu = document.querySelector("#profile-menu");
-    const triangle = document.querySelector("#triangle");
+    const mobileBtn = document.querySelector("#mobile-btn");
+    const mobileMenu= document.querySelector("#mobile-menu");
 
-    icon.addEventListener('click', function(){
-        if (menu.classList.contains("scale3d")) {
-            menu.classList.remove("scale3d");
-            triangle.classList.remove("scale3d");
+    if (icon !== null) {
+        icon.addEventListener('click', function(){
+            if (menu.classList.contains("scale3d")) menu.classList.remove("scale3d")
+            else menu.classList.add("scale3d")
+        })
+
+    }
+
+    mobileBtn.addEventListener('click', function(){
+        if (mobileMenu.classList.contains('max-h-0')) {
+            mobileMenu.classList.add('max-h-96')
+            mobileMenu.classList.remove('max-h-0')
         }
         else {
-            menu.classList.add("scale3d");
-            triangle.classList.add("scale3d");
+            mobileMenu.classList.add('max-h-0')
+            mobileMenu.classList.remove('max-h-96')
         }
+
     })
-
-
-
-
 
 
 
