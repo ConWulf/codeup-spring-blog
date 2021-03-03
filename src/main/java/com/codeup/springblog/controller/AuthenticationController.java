@@ -26,23 +26,23 @@ public class AuthenticationController {
     @GetMapping("/sign-up")
     public String showSignUpPage(Model model) {
         model.addAttribute("user", new User());
-        return "/users/sign-up";
+        return "users/sign-up";
     }
 
     @PostMapping("/sign-up")
     public String saveUser(@Valid @ModelAttribute User user, Errors e, Model model, @RequestParam(name = "confirm-password") String confirmPassword) {
         if(e.hasErrors()) {
             model.addAttribute("errors", e);
-            return "/users/sign-up";
+            return "users/sign-up";
         } else if(userDao.findByUsername(user.getUsername()) != null) {
             model.addAttribute("username", user.getUsername());
-            return "/users/sign-up";
+            return "users/sign-up";
         } else if(userDao.findByEmail(user.getEmail()) != null) {
             model.addAttribute("email", user.getEmail());
-            return "/users/sign-up";
+            return "users/sign-up";
         } else if(!confirmPassword.equals(user.getPassword())) {
             model.addAttribute("mismatch", 0);
-            return "/users/sign-up";
+            return "users/sign-up";
         }
 
         String hash = passwordEncoder.encode(user.getPassword());
@@ -53,7 +53,7 @@ public class AuthenticationController {
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "/users/login";
+        return "users/login";
     }
 
 }
