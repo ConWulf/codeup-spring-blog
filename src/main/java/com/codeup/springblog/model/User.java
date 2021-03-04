@@ -30,6 +30,9 @@ public class User {
     )
     private List<Post> posts;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private PasswordResetToken prt;
+
     public User() { }
 
     public User(User copy) {
@@ -75,5 +78,13 @@ public class User {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public PasswordResetToken getPrt() {
+        return prt;
+    }
+
+    public void setPrt(PasswordResetToken prt) {
+        this.prt = prt;
     }
 }

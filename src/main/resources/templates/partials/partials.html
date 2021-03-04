@@ -34,7 +34,7 @@
 						<a href="/posts" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
 						<a sec:authorize="!isAuthenticated()" href="/login" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
 						<a sec:authorize="!isAuthenticated()" href="/sign-up" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign Up</a>
-						<a sec:authorize="isAuthenticated()" href="/posts/create" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Create Post</a>
+						<a sec:authorize="isAuthenticated()" href="/posts/create" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Create</a>
 					</div>
 				</div>
 			</div>
@@ -74,7 +74,7 @@
 			<a href="/posts" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
 			<a href="/login" sec:authorize="!isAuthenticated()"  class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Login</a>
 			<a href="/sign-up" sec:authorize="!isAuthenticated()" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sign Up</a>
-			<a href="/posts/create" sec:authorize="isAuthenticated()" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Create Post</a>
+			<a href="/posts/create" sec:authorize="isAuthenticated()" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Create</a>
 		</div>
 	</div>
 </nav>

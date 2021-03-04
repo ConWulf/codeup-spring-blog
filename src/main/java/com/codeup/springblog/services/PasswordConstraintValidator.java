@@ -5,8 +5,11 @@ import org.passay.*;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
     @Override
@@ -37,5 +40,49 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
                 .addConstraintViolation()
                 .disableDefaultConstraintViolation();
         return false;
+    }
+
+    private static boolean isValidLength(String p) {
+        return p.length() <= 8 || p.length() >= 31;
+    }
+
+    private static boolean containsNum(String p) {
+        return !p.matches(".*//d+.*");
+    }
+
+    private static boolean containsUppercaseLetter(String p) {
+        return p.equals(p.toLowerCase()) || !p.equals(p.toUpperCase());
+    }
+
+    private static boolean containsSpecialChar(String p) {
+        Pattern pattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(p);
+        return !matcher.find();
+    }
+
+    private static boolean hasWhitespace(String p) {
+        return p.contains(" ");
+    }
+
+    public static List<String> errorMessages(String p) {
+        List<String> errors = new ArrayList<>();
+        if(isValidLength(p)) errors.add("Password must be between 9 and 30 characters");
+        else if(containsNum(p)) errors.add("Password must contain at least 1 number");
+        else if(containsUppercaseLetter(p)) errors.add("Password must contain at least 1 uppercase letter");
+        else if(containsSpecialChar(p)) errors.add("Password must contain at least 1 special character");
+        else if(hasWhitespace(p)) errors.add("Password must not contain any spaces");
+        return errors;
+    }
+
+    private static boolean hasErrors(String p) {
+        return isValidLength(p)
+        || containsNum(p)
+        || containsUppercaseLetter(p)
+        || containsSpecialChar(p)
+        || hasWhitespace(p);
+    }
+
+    public static boolean isValid(String p) {
+        return !hasErrors(p);
     }
 }

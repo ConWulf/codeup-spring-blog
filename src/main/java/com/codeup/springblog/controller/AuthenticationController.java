@@ -1,10 +1,12 @@
 package com.codeup.springblog.controller;
 
+import com.codeup.springblog.ValidPassword;
 import com.codeup.springblog.model.PasswordResetToken;
 import com.codeup.springblog.model.User;
 import com.codeup.springblog.repositories.ResetTokenRepository;
 import com.codeup.springblog.repositories.UserRepository;
 import com.codeup.springblog.services.EmailService;
+import com.codeup.springblog.services.PasswordConstraintValidator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.UUID;
@@ -74,20 +78,22 @@ public class AuthenticationController {
     }
 
     @PostMapping("/forgot")
-    public String resetPw(@ModelAttribute User user, Model model, RedirectAttributes ra) {
-        if(userDao.findByEmail(user.getEmail()) == null) {
-            model.addAttribute("notExists", user.getEmail());
+    public String resetPw(@RequestParam(name = "email") String email, Model model, RedirectAttributes ra) {
+        User userResetting = userDao.findByEmail(email);
+        if(userResetting == null) {
+            model.addAttribute("notExists", email);
             return "users/forgot-password";
         }
         String token = UUID.randomUUID().toString();
         PasswordResetToken prt = new PasswordResetToken(token);
         prt.setExpirationDate(new Date());
-        prt.setUser(userDao.findByEmail(user.getEmail()));
+        userResetting.setPrt(prt);
         tokenDao.save(prt);
+        userDao.save(userResetting);
         String link = "http://localhost:8080/reset?token="+prt.getToken();
         String body = String.format("You have asked to reset your password. To reset your password, Follow this link: <a href=%s>reset</a>", link);
-        emailService.prepareAndASend(user, "Reset Password", body);
-        ra.addFlashAttribute("sent", user.getEmail());
+        emailService.prepareAndASend(userResetting, "Reset Password", body);
+        ra.addFlashAttribute("sent", email);
         return "redirect:/login";
     }
 
@@ -97,18 +103,26 @@ public class AuthenticationController {
         if(prt == null) {
             return "redirect:/login";
         }
-        model.addAttribute("user", new User());
         model.addAttribute("token", prt.getToken());
         return "users/forgot-password";
     }
 
     @PostMapping("/reset")
-    public String resetPassword(@RequestParam(name = "password") String password, @RequestParam(name = "confirm-password") String confirmPassword, @RequestParam(name = "token") String token) {
-        PasswordResetToken prt = new PasswordResetToken(token);
-        User user = prt.getUser();
+    public String resetPassword(@RequestParam(name = "password") @ValidPassword String password, @RequestParam(name = "confirm-password") String confirmPassword,
+                                @RequestParam(name = "token") String token, Model model, RedirectAttributes ra) {
+        if(!password.equals(confirmPassword)) {
+            model.addAttribute("token", token);
+            ra.addFlashAttribute("noMatch", "passwords do not match");
+            return "redirect:/reset?token="+token;
+        }
+        if(!PasswordConstraintValidator.isValid(password)) {
+            ra.addFlashAttribute("errors", PasswordConstraintValidator.errorMessages(password));
+            return "redirect:/reset?token="+token;
+        }
+        PasswordResetToken prt = tokenDao.findByToken(token);
+        User user = userDao.findByPrt(prt);
         user.setPassword(passwordEncoder.encode(password));
         userDao.save(user);
-        tokenDao.delete(prt);
         return "redirect:/login";
     }
 
