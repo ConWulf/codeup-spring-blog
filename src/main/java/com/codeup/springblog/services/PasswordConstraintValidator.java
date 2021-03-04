@@ -47,11 +47,11 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
     }
 
     private static boolean containsNum(String p) {
-        return !p.matches(".*//d+.*");
+        return p.matches(".*//d+.*");
     }
 
     private static boolean containsUppercaseLetter(String p) {
-        return p.equals(p.toLowerCase()) || !p.equals(p.toUpperCase());
+        return p.equals(p.toLowerCase()) || p.equals(p.toUpperCase());
     }
 
     private static boolean containsSpecialChar(String p) {
@@ -67,10 +67,10 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
     public static List<String> errorMessages(String p) {
         List<String> errors = new ArrayList<>();
         if(isValidLength(p)) errors.add("Password must be between 9 and 30 characters");
-        else if(containsNum(p)) errors.add("Password must contain at least 1 number");
-        else if(containsUppercaseLetter(p)) errors.add("Password must contain at least 1 uppercase letter");
-        else if(containsSpecialChar(p)) errors.add("Password must contain at least 1 special character");
-        else if(hasWhitespace(p)) errors.add("Password must not contain any spaces");
+        if(containsNum(p)) errors.add("Password must contain at least 1 number");
+        if(containsUppercaseLetter(p)) errors.add("Password must contain at least 1 uppercase letter");
+        if(containsSpecialChar(p)) errors.add("Password must contain at least 1 special character");
+        if(hasWhitespace(p)) errors.add("Password must not contain any spaces");
         return errors;
     }
 
