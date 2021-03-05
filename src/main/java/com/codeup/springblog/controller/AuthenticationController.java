@@ -91,7 +91,7 @@ public class AuthenticationController {
         tokenDao.save(prt);
         userDao.save(userResetting);
         String link = "http://localhost:8080/reset?token="+prt.getToken();
-        String body = String.format("You have asked to reset your password. To reset your password, Follow this link: <a href=%s>reset</a>", link);
+        String body = String.format("You have asked to your password. To reset your password, click <a href=%s>here</a>", link);
         emailService.prepareAndASend(userResetting, "Reset Password", body);
         ra.addFlashAttribute("sent", email);
         return "redirect:/login";
@@ -123,6 +123,7 @@ public class AuthenticationController {
         User user = userDao.findByPrt(prt);
         user.setPassword(passwordEncoder.encode(password));
         userDao.save(user);
+        tokenDao.delete(prt);
         return "redirect:/login";
     }
 

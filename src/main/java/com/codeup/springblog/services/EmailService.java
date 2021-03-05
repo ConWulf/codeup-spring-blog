@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 @Service("mailService")
 public class EmailService {
@@ -33,14 +37,19 @@ public class EmailService {
     }
 
     public void prepareAndASend(User user, String subject, String body) {
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setFrom(from);
-        msg.setTo(user.getEmail());
-        msg.setSubject(subject);
-        msg.setText(body);
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper mh = new MimeMessageHelper(message);
+        try {
+            mh.setText(body, true);
+            mh.setFrom(from);
+            mh.setTo(user.getEmail());
+            mh.setSubject(subject);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
 
         try {
-            this.emailSender.send(msg);
+            this.emailSender.send(message);
         } catch (MailException mex) {
             System.err.println(mex.getMessage());
         }

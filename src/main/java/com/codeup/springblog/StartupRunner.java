@@ -30,7 +30,7 @@ public class StartupRunner implements CommandLineRunner {
         }
         User user = new User();
         user.setUsername("cody");
-        user.setEmail("cody@codeup.com");
+        user.setEmail("connwulf14@gmail.com");
         user.setPassword(passwordEncoder.encode("codeuprocks"));
         userDao.save(user);
 
