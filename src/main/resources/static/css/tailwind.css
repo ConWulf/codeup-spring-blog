@@ -748,6 +748,10 @@ select {
   outline: 1px auto -webkit-focus-ring-color;
 }
 
+body {
+  overflow-x: hidden
+}
+
 .container {
   width: 100%;
 }

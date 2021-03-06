@@ -122,8 +122,8 @@ public class AuthenticationController {
         PasswordResetToken prt = tokenDao.findByToken(token);
         User user = userDao.findByPrt(prt);
         user.setPassword(passwordEncoder.encode(password));
+        tokenDao.deleteById(prt.getId());
         userDao.save(user);
-        tokenDao.delete(prt);
         return "redirect:/login";
     }
 
