@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/partials :: head"></head>
+<head th:replace="partials/partials :: head(edit)"></head>
 <body>
 <nav th:replace="partials/partials :: nav"></nav>
 <form th:action="@{|/posts/edit/${post.id}|}" th:method="post" th:object="${post}">
