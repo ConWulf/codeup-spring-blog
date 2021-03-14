@@ -5,8 +5,8 @@
 <nav th:replace="partials/partials :: nav"></nav>
 <header th:replace="partials/partials :: header"></header>
 <main>
-	<div  class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-		<div class="ad" th:each="post : ${posts}">
+	<div  class="max-w-7xl grid gap-1 grid-cols-12 mx-auto py-6 sm:px-6 lg:px-8">
+		<div class="ad col-span-full md:col-span-6 lg:col-span-4 p-3" th:each="post : ${posts}">
 			<h1 th:text="${post.title}"></h1>
 			<p th:text="${post.body}"></p>
 			<span class="p-1 bg-gray-300" th:each="tag : ${post.tags}" th:text="${tag.name}"></span>
