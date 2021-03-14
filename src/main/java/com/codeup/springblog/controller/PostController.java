@@ -57,7 +57,7 @@ public class PostController {
     public String editPost(@PathVariable long id, Model model) {
         Post post = postDao.getOne(id);
         model.addAttribute("post", post);
-        return "posts/edit";
+        return "posts/create";
     }
     @PostMapping("/posts/edit/{id}")
     public String editPost(@ModelAttribute Post post) {
