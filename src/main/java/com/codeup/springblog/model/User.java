@@ -24,6 +24,12 @@ public class User {
     @ValidPassword
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
+
+    @Column
+    private boolean Enabled;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "user"
@@ -86,5 +92,21 @@ public class User {
 
     public void setPrt(PasswordResetToken prt) {
         this.prt = prt;
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+    public boolean isEnabled() {
+        return Enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        Enabled = enabled;
     }
 }
