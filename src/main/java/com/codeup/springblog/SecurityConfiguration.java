@@ -1,9 +1,9 @@
 package com.codeup.springblog;
 
 import com.codeup.springblog.model.CustomOAuth2User;
+import com.codeup.springblog.model.User;
 import com.codeup.springblog.services.UserDetailsLoader;
 import com.codeup.springblog.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,15 +12,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.UUID;
+
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     private final UserDetailsLoader userLoader;
 
-    @Autowired
-    private UserService userService;
 
-    public SecurityConfiguration(UserDetailsLoader userLoader) {
+    private final UserService userService;
+
+    public SecurityConfiguration(UserDetailsLoader userLoader, UserService userService) {
         this.userLoader = userLoader;
+        this.userService = userService;
     }
 
     @Bean
@@ -68,7 +72,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //top and bottom code do the same thing
                 .successHandler((request, response, authentication) -> {
                     CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
-                    userService.processOAuthPostLogin(oauthUser.getEmail(), oauthUser.getEmail());
+                    User User = (User) authentication.getPrincipal();
+                    userService.processOAuthPostLogin(oauthUser.getEmail(), oauthUser.getEmail(), passwordEncoder().encode(UUID.randomUUID().toString()));
                     response.sendRedirect("/posts");
                 });
     }

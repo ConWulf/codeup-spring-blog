@@ -13,10 +13,10 @@ public class Post {
     @Column(nullable = false, length = 100)
     private String title;
 
-    @Column(nullable = false, length = 20000)
+    @Column(nullable = false, columnDefinition = "text")
     private String body;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "posts_tags",
             joinColumns = {@JoinColumn(name = "post_id")},

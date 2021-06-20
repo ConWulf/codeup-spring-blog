@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-screen">
 <head th:replace="partials/partials :: head(create)"></head>
-<body class="h-screen">
+<body class="">
 <nav th:replace="partials/partials :: nav"></nav>
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-14 px-4 sm:px-6 lg:px-8 absolute w-full top-0 -z-10">
-	<form th:if="${post == null}" th:action="@{/posts/create}" th:method="post" th:object="${post}" class="flex flex-col mx-auto p-1 w-11/12 max-w-4xl bg-gray-600">
+	<form th:if="${post.id == 0}" th:action="@{/posts/create}" th:method="post" th:object="${post}" class="flex flex-col mx-auto p-1 w-11/12 max-w-4xl bg-gray-600">
 		<label for="title">TITLE</label>
 		<input type="text" id="title" th:field="*{title}">
 		<label for="body">BODY</label>
 		<input type="text" id="body" th:field="*{body}">
 		<input type="submit" class="mt-4">
 	</form>
-	<form th:if="${post != null}" th:action="@{|/posts/edit/${post.id}|}" th:method="post" th:object="${post}">
+	<form th:unless="${post.id == 0}" th:action="@{|/posts/edit/${post.id}|}" th:method="post" th:object="${post}">
 		<label for="title">title</label>
 		<input type="text" id="title" th:field="*{title}" th:value="post.title">
 		<label for="body">body</label>
