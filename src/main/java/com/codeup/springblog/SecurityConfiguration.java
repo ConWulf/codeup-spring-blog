@@ -2,6 +2,8 @@ package com.codeup.springblog;
 
 import com.codeup.springblog.model.CustomOAuth2User;
 import com.codeup.springblog.model.User;
+import com.codeup.springblog.model.UserWithRoles;
+import com.codeup.springblog.repositories.UserRepository;
 import com.codeup.springblog.services.UserDetailsLoader;
 import com.codeup.springblog.services.UserService;
 import org.springframework.context.annotation.Bean;
@@ -23,12 +25,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsLoader userLoader;
 
+    private final UserRepository userDao;
 
     private final UserService userService;
 
-    public SecurityConfiguration(UserDetailsLoader userLoader, UserService userService) {
+    public SecurityConfiguration(UserDetailsLoader userLoader, UserService userService, UserRepository userDao) {
         this.userLoader = userLoader;
         this.userService = userService;
+        this.userDao = userDao;
     }
 
     @Bean
@@ -72,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .oauth2Login()
                 .loginPage("/login")
                 .userInfoEndpoint()
-                .userService(userService)
+                .userService(userLoader)
                 .and()
 //                .successHandler(new AuthenticationSuccessHandler() {
 //                    @Override
@@ -85,7 +89,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //top and bottom code do the same thing
                 .successHandler((request, response, authentication) -> {
                     CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
-                    userService.processOAuthPostLogin(oauthUser.getEmail(), oauthUser.getEmail(), passwordEncoder().encode(UUID.randomUUID().toString()));
+                    userService.processOAuthPostLogin(oauthUser.getName(), oauthUser.getEmail(), passwordEncoder().encode(UUID.randomUUID().toString()));
+                    User user = userDao.findByEmail(((CustomOAuth2User) authentication.getPrincipal()).getEmail());
+                    if (user != null) {
+                        ((User) authentication.getPrincipal()).setEmail(user.getEmail());
+                        ((User) authentication.getPrincipal()).setUsername(user.getUsername());
+                        ((User) authentication.getPrincipal()).setId(user.getId());
+                        ((User) authentication.getPrincipal()).setProvider(user.getProvider());
+                        ((User) authentication.getPrincipal()).setPosts(user.getPosts());
+                    }
                     response.sendRedirect("/posts");
                 });
     }

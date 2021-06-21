@@ -15,19 +15,15 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service("UserService")
-public class UserService extends DefaultOAuth2UserService {
+public class UserService {
 
     @Autowired
     private UserRepository repo;
 
     public User loggedInUser() {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication());
+        Object test = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
-
-    @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User user =  super.loadUser(userRequest);
-        return new CustomOAuth2User(user);
     }
 
 

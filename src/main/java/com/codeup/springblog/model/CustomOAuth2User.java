@@ -14,6 +14,7 @@ public class CustomOAuth2User extends User implements OAuth2User {
         this.oauth2User = oauth2User;
     }
 
+
     @Override
     public Map<String, Object> getAttributes() {
         return oauth2User.getAttributes();
