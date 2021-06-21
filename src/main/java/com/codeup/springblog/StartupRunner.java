@@ -2,6 +2,7 @@ package com.codeup.springblog;
 
 
 import com.codeup.springblog.model.Post;
+import com.codeup.springblog.model.Provider;
 import com.codeup.springblog.model.User;
 import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.repositories.UserRepository;
@@ -32,6 +33,7 @@ public class StartupRunner implements CommandLineRunner {
         user.setUsername("cody");
         user.setEmail("cody@codeup.com");
         user.setPassword(passwordEncoder.encode("codeuprocks"));
+        user.setProvider(Provider.LOCAL);
         userDao.save(user);
 
         Post post = new Post();

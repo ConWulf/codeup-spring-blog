@@ -11,6 +11,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.UUID;
 
@@ -35,6 +39,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userLoader).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    WebClient webClient(ClientRegistrationRepository clientRegistrationRepository,
+                        OAuth2AuthorizedClientRepository authorizedClientRepository) {
+        ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 =
+                new ServletOAuth2AuthorizedClientExchangeFilterFunction(clientRegistrationRepository, authorizedClientRepository);
+        oauth2.setDefaultOAuth2AuthorizedClient(true);
+        return WebClient.builder().apply(oauth2.oauth2Configuration()).build();
     }
 
     @Override
@@ -72,7 +85,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //top and bottom code do the same thing
                 .successHandler((request, response, authentication) -> {
                     CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
-                    User User = (User) authentication.getPrincipal();
                     userService.processOAuthPostLogin(oauthUser.getEmail(), oauthUser.getEmail(), passwordEncoder().encode(UUID.randomUUID().toString()));
                     response.sendRedirect("/posts");
                 });

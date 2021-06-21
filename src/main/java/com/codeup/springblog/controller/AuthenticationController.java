@@ -2,6 +2,7 @@ package com.codeup.springblog.controller;
 
 import com.codeup.springblog.ValidPassword;
 import com.codeup.springblog.model.PasswordResetToken;
+import com.codeup.springblog.model.Provider;
 import com.codeup.springblog.model.User;
 import com.codeup.springblog.repositories.ResetTokenRepository;
 import com.codeup.springblog.repositories.UserRepository;
@@ -60,6 +61,7 @@ public class AuthenticationController {
 
         String hash = passwordEncoder.encode(user.getPassword());
         user.setPassword(hash);
+        user.setProvider(Provider.LOCAL);
         userDao.save(user);
         return "redirect:/login";
     }
