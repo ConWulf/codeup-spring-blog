@@ -90,7 +90,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .successHandler((request, response, authentication) -> {
                     CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
                     userService.processOAuthPostLogin(oauthUser.getName(), oauthUser.getEmail(), passwordEncoder().encode(UUID.randomUUID().toString()));
-                    User user = userDao.findByEmail(((CustomOAuth2User) authentication.getPrincipal()).getEmail());
+                    User user = userDao.findByEmail(oauthUser.getEmail());
                     if (user != null) {
                         ((User) authentication.getPrincipal()).setEmail(user.getEmail());
                         ((User) authentication.getPrincipal()).setUsername(user.getUsername());

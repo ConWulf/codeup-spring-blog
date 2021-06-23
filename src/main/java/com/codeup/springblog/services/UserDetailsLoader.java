@@ -22,10 +22,15 @@ public class UserDetailsLoader extends DefaultOAuth2UserService implements UserD
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userDao.findByEmail(email);
+    public UserDetails loadUserByUsername(String signIn) throws UsernameNotFoundException {
+        User user;
+        if(signIn.contains("@")) {
+            user = userDao.findByEmail(signIn);
+        } else {
+            user = userDao.findByUsername(signIn);
+        }
         if (user == null) {
-            throw new UsernameNotFoundException("no user found for username: "+email);
+            throw new UsernameNotFoundException("no user found for username: "+signIn);
         }
         return new UserWithRoles(user);
     }
