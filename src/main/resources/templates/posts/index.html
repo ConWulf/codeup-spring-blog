@@ -12,9 +12,9 @@
 			<span class="p-1 bg-gray-300" th:each="tag : ${post.tags}" th:text="${tag.name}"></span>
 
 			<a th:href="@{|/posts/${post.id}|}">more details</a>
-			<th:block th:if="${#authentication.principal.id == post.user.id}">
-				<a th:href="@{|/posts/edit/${post.id}|}">edit</a>
-				<form th:action="@{|/posts/delete/${post.id}|}" th:method="post">
+			<th:block th:if="${#authentication.principal}">
+				<a th:if="${#authentication.principal.id == post.user.id}" th:href="@{|/posts/edit/${post.id}|}">edit</a>
+				<form th:if="${#authentication.principal.id == post.user.id}" th:action="@{|/posts/delete/${post.id}|}" th:method="post">
 					<button>DELETE</button>
 				</form>
 			</th:block>

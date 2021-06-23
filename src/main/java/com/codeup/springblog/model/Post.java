@@ -28,6 +28,9 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<Image> images;
+
     public Post() {}
 
     public Post(long id, String title, String body, List<Tag> tags) {
@@ -82,5 +85,13 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 }

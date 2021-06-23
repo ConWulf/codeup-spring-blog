@@ -30,6 +30,9 @@ public class User {
     @Column
     private boolean Enabled;
 
+    @Column
+    private String profileImagePath;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "user"
@@ -108,5 +111,13 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         Enabled = enabled;
+    }
+
+    public String getProfileImagePath() {
+        return profileImagePath;
+    }
+
+    public void setProfileImagePath(String profileImagePath) {
+        this.profileImagePath = profileImagePath;
     }
 }

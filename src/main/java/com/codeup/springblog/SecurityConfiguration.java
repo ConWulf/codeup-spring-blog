@@ -89,7 +89,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //top and bottom code do the same thing
                 .successHandler((request, response, authentication) -> {
                     CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
-                    userService.processOAuthPostLogin(oauthUser.getName(), oauthUser.getEmail(), passwordEncoder().encode(UUID.randomUUID().toString()));
+                    userService.processOAuthPostLogin(oauthUser.getName(), oauthUser.getEmail(), passwordEncoder().encode(UUID.randomUUID().toString()), oauthUser.getPicture());
                     User user = userDao.findByEmail(oauthUser.getEmail());
                     if (user != null) {
                         ((User) authentication.getPrincipal()).setEmail(user.getEmail());
@@ -97,6 +97,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         ((User) authentication.getPrincipal()).setId(user.getId());
                         ((User) authentication.getPrincipal()).setProvider(user.getProvider());
                         ((User) authentication.getPrincipal()).setPosts(user.getPosts());
+                        ((User) authentication.getPrincipal()).setProfileImagePath(user.getProfileImagePath());
                     }
                     response.sendRedirect("/posts");
                 });
