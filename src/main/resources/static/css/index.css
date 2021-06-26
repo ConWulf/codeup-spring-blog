@@ -40,7 +40,7 @@
         transition: max-height 100ms linear;
     }
     .u-section-1 {
-        background-image: linear-gradient(0deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url("../images/pexels-jaime-reimer-2662116.jpg");
+        background-image: linear-gradient(0deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url("../images/pexelsphoto3393444.jpeg");
         background-position: 50% 50%;
     }
 
@@ -51,7 +51,7 @@
     .u-section-1 .u-text-1 {
         font-family: Ubuntu, sans-serif;
         font-size: 2.25rem;
-        margin: 257px 0 0 648px;
+        margin: 0 0 0 759px;
     }
 
     .u-section-1 .u-text-2 {
@@ -67,7 +67,7 @@
         text-transform: uppercase;
         font-weight: 700;
         letter-spacing: 2px;
-        margin: 30px 0 60px auto;
+        margin: 0 0 60px auto;
         padding: 0;
     }
 
@@ -78,7 +78,7 @@
 
         .u-section-1 .u-text-1 {
             margin-top: 60px;
-            margin-left: 448px;
+            margin-left: 559px;
         }
 
         .u-section-1 .u-text-2 {
@@ -92,7 +92,7 @@
         }
 
         .u-section-1 .u-text-1 {
-            margin-left: 228px;
+            margin-left: 339px;
         }
 
         .u-section-1 .u-text-2 {
@@ -111,14 +111,14 @@
 
         .u-section-1 .u-text-1 {
             width: auto;
-            margin-top: 183px;
-            margin-left: 48px;
-            font-size: 1.5;
+            /*margin-top: 183px;*/
+            margin-left: 559px;
+            font-size: 1.5rem;
         }
 
         .u-section-1 .u-text-2 {
             width: auto;
-            margin-left: 159px;
+            margin-left: 559px;
         }
     }
 
@@ -129,7 +129,7 @@
 
         .u-section-1 .u-text-1 {
             font-size: 1.5rem;
-            margin-top: 60px;
+            /*margin-top: 60px;*/
             margin-left: 0;
         }
 
